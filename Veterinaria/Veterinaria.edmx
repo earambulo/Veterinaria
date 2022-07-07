@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VeterinariaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NroDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="NombreApelllido" Type="varchar" MaxLength="50" />
+          <Property Name="CiudadID" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="EstaActivo" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Especie">
+          <Key>
+            <PropertyRef Name="EspecieID" />
+          </Key>
+          <Property Name="EspecieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EstaActivo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mascota">
+          <Key>
+            <PropertyRef Name="MascotaID" />
+          </Key>
+          <Property Name="MascotaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RazaID" Type="int" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="Sexo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EspecieID" Type="int" />
+          <Property Name="EstaActivo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MascotaVacuna">
+          <Key>
+            <PropertyRef Name="MascotaVacunaID" />
+          </Key>
+          <Property Name="MascotaVacunaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MascotaID" Type="int" Nullable="false" />
+          <Property Name="VacunaID" Type="int" Nullable="false" />
+          <Property Name="FechaVacunacion" Type="date" Nullable="false" />
+          <Property Name="FechaProximaVacunacion" Type="date" />
+          <Property Name="Costo" Type="money" />
+        </EntityType>
+        <EntityType Name="Raza">
+          <Key>
+            <PropertyRef Name="RazaID" />
+          </Key>
+          <Property Name="RazaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="EstaActivo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vacuna">
+          <Key>
+            <PropertyRef Name="VacunaID" />
+          </Key>
+          <Property Name="VacunaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PeriodicidadMes" Type="int" Nullable="false" />
+          <Property Name="EstaActivo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cliente_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="CiudadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Especie">
+          <End Role="Especie" Type="Self.Especie" Multiplicity="0..1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especie">
+              <PropertyRef Name="EspecieID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="EspecieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Raza">
+          <End Role="Raza" Type="Self.Raza" Multiplicity="1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raza">
+              <PropertyRef Name="RazaID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="RazaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MascotaVacuna_Mascota">
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="1" />
+          <End Role="MascotaVacuna" Type="Self.MascotaVacuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascota">
+              <PropertyRef Name="MascotaID" />
+            </Principal>
+            <Dependent Role="MascotaVacuna">
+              <PropertyRef Name="MascotaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MascotaVacuna_Vacuna">
+          <End Role="Vacuna" Type="Self.Vacuna" Multiplicity="1" />
+          <End Role="MascotaVacuna" Type="Self.MascotaVacuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacuna">
+              <PropertyRef Name="VacunaID" />
+            </Principal>
+            <Dependent Role="MascotaVacuna">
+              <PropertyRef Name="VacunaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VeterinariaModelStoreContainer">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especie" EntityType="Self.Especie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mascota" EntityType="Self.Mascota" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MascotaVacuna" EntityType="Self.MascotaVacuna" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Raza" EntityType="Self.Raza" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vacuna" EntityType="Self.Vacuna" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cliente_Ciudad" Association="Self.FK_Cliente_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Cliente" Association="Self.FK_Mascota_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Especie" Association="Self.FK_Mascota_Especie">
+            <End Role="Especie" EntitySet="Especie" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Raza" Association="Self.FK_Mascota_Raza">
+            <End Role="Raza" EntitySet="Raza" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MascotaVacuna_Mascota" Association="Self.FK_MascotaVacuna_Mascota">
+            <End Role="Mascota" EntitySet="Mascota" />
+            <End Role="MascotaVacuna" EntitySet="MascotaVacuna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MascotaVacuna_Vacuna" Association="Self.FK_MascotaVacuna_Vacuna">
+            <End Role="Vacuna" EntitySet="Vacuna" />
+            <End Role="MascotaVacuna" EntitySet="MascotaVacuna" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VeterinariaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Ciudad" FromRole="Ciudad" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NroDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NombreApelllido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CiudadID" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstaActivo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Ciudad" Relationship="Self.FK_Cliente_Ciudad" FromRole="Cliente" ToRole="Ciudad" />
+          <NavigationProperty Name="Mascota" Relationship="Self.FK_Mascota_Cliente" FromRole="Cliente" ToRole="Mascota" />
+        </EntityType>
+        <EntityType Name="Especie">
+          <Key>
+            <PropertyRef Name="EspecieID" />
+          </Key>
+          <Property Name="EspecieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mascota" Relationship="Self.FK_Mascota_Especie" FromRole="Especie" ToRole="Mascota" />
+        </EntityType>
+        <EntityType Name="Mascota">
+          <Key>
+            <PropertyRef Name="MascotaID" />
+          </Key>
+          <Property Name="MascotaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazaID" Type="Int32" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EspecieID" Type="Int32" />
+          <Property Name="EstaActivo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Mascota_Cliente" FromRole="Mascota" ToRole="Cliente" />
+          <NavigationProperty Name="Especie" Relationship="Self.FK_Mascota_Especie" FromRole="Mascota" ToRole="Especie" />
+          <NavigationProperty Name="Raza" Relationship="Self.FK_Mascota_Raza" FromRole="Mascota" ToRole="Raza" />
+          <NavigationProperty Name="MascotaVacuna" Relationship="Self.FK_MascotaVacuna_Mascota" FromRole="Mascota" ToRole="MascotaVacuna" />
+        </EntityType>
+        <EntityType Name="MascotaVacuna">
+          <Key>
+            <PropertyRef Name="MascotaVacunaID" />
+          </Key>
+          <Property Name="MascotaVacunaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MascotaID" Type="Int32" Nullable="false" />
+          <Property Name="VacunaID" Type="Int32" Nullable="false" />
+          <Property Name="FechaVacunacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaProximaVacunacion" Type="DateTime" Precision="0" />
+          <Property Name="Costo" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Mascota" Relationship="Self.FK_MascotaVacuna_Mascota" FromRole="MascotaVacuna" ToRole="Mascota" />
+          <NavigationProperty Name="Vacuna" Relationship="Self.FK_MascotaVacuna_Vacuna" FromRole="MascotaVacuna" ToRole="Vacuna" />
+        </EntityType>
+        <EntityType Name="Raza">
+          <Key>
+            <PropertyRef Name="RazaID" />
+          </Key>
+          <Property Name="RazaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstaActivo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mascota" Relationship="Self.FK_Mascota_Raza" FromRole="Raza" ToRole="Mascota" />
+        </EntityType>
+        <EntityType Name="Vacuna">
+          <Key>
+            <PropertyRef Name="VacunaID" />
+          </Key>
+          <Property Name="VacunaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PeriodicidadMes" Type="Int32" Nullable="false" />
+          <Property Name="EstaActivo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MascotaVacuna" Relationship="Self.FK_MascotaVacuna_Vacuna" FromRole="Vacuna" ToRole="MascotaVacuna" />
+        </EntityType>
+        <Association Name="FK_Cliente_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="CiudadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Especie">
+          <End Role="Especie" Type="Self.Especie" Multiplicity="0..1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especie">
+              <PropertyRef Name="EspecieID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="EspecieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mascota_Raza">
+          <End Role="Raza" Type="Self.Raza" Multiplicity="1" />
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raza">
+              <PropertyRef Name="RazaID" />
+            </Principal>
+            <Dependent Role="Mascota">
+              <PropertyRef Name="RazaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MascotaVacuna_Mascota">
+          <End Role="Mascota" Type="Self.Mascota" Multiplicity="1" />
+          <End Role="MascotaVacuna" Type="Self.MascotaVacuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascota">
+              <PropertyRef Name="MascotaID" />
+            </Principal>
+            <Dependent Role="MascotaVacuna">
+              <PropertyRef Name="MascotaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MascotaVacuna_Vacuna">
+          <End Role="Vacuna" Type="Self.Vacuna" Multiplicity="1" />
+          <End Role="MascotaVacuna" Type="Self.MascotaVacuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacuna">
+              <PropertyRef Name="VacunaID" />
+            </Principal>
+            <Dependent Role="MascotaVacuna">
+              <PropertyRef Name="VacunaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VeterinariaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Especie" EntityType="Self.Especie" />
+          <EntitySet Name="Mascota" EntityType="Self.Mascota" />
+          <EntitySet Name="MascotaVacuna" EntityType="Self.MascotaVacuna" />
+          <EntitySet Name="Raza" EntityType="Self.Raza" />
+          <EntitySet Name="Vacuna" EntityType="Self.Vacuna" />
+          <AssociationSet Name="FK_Cliente_Ciudad" Association="Self.FK_Cliente_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Cliente" Association="Self.FK_Mascota_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Especie" Association="Self.FK_Mascota_Especie">
+            <End Role="Especie" EntitySet="Especie" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mascota_Raza" Association="Self.FK_Mascota_Raza">
+            <End Role="Raza" EntitySet="Raza" />
+            <End Role="Mascota" EntitySet="Mascota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MascotaVacuna_Mascota" Association="Self.FK_MascotaVacuna_Mascota">
+            <End Role="Mascota" EntitySet="Mascota" />
+            <End Role="MascotaVacuna" EntitySet="MascotaVacuna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MascotaVacuna_Vacuna" Association="Self.FK_MascotaVacuna_Vacuna">
+            <End Role="Vacuna" EntitySet="Vacuna" />
+            <End Role="MascotaVacuna" EntitySet="MascotaVacuna" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VeterinariaModelStoreContainer" CdmEntityContainer="VeterinariaEntities">
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="VeterinariaModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="CiudadID" ColumnName="CiudadID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="VeterinariaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="NombreApelllido" ColumnName="NombreApelllido" />
+                <ScalarProperty Name="CiudadID" ColumnName="CiudadID" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especie">
+            <EntityTypeMapping TypeName="VeterinariaModel.Especie">
+              <MappingFragment StoreEntitySet="Especie">
+                <ScalarProperty Name="EspecieID" ColumnName="EspecieID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mascota">
+            <EntityTypeMapping TypeName="VeterinariaModel.Mascota">
+              <MappingFragment StoreEntitySet="Mascota">
+                <ScalarProperty Name="MascotaID" ColumnName="MascotaID" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="RazaID" ColumnName="RazaID" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="EspecieID" ColumnName="EspecieID" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MascotaVacuna">
+            <EntityTypeMapping TypeName="VeterinariaModel.MascotaVacuna">
+              <MappingFragment StoreEntitySet="MascotaVacuna">
+                <ScalarProperty Name="MascotaVacunaID" ColumnName="MascotaVacunaID" />
+                <ScalarProperty Name="MascotaID" ColumnName="MascotaID" />
+                <ScalarProperty Name="VacunaID" ColumnName="VacunaID" />
+                <ScalarProperty Name="FechaVacunacion" ColumnName="FechaVacunacion" />
+                <ScalarProperty Name="FechaProximaVacunacion" ColumnName="FechaProximaVacunacion" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Raza">
+            <EntityTypeMapping TypeName="VeterinariaModel.Raza">
+              <MappingFragment StoreEntitySet="Raza">
+                <ScalarProperty Name="RazaID" ColumnName="RazaID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vacuna">
+            <EntityTypeMapping TypeName="VeterinariaModel.Vacuna">
+              <MappingFragment StoreEntitySet="Vacuna">
+                <ScalarProperty Name="VacunaID" ColumnName="VacunaID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="PeriodicidadMes" ColumnName="PeriodicidadMes" />
+                <ScalarProperty Name="EstaActivo" ColumnName="EstaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
