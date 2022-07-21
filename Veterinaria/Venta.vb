@@ -10,17 +10,12 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class Cliente
+Partial Public Class Venta
+    Public Property VentaID As Integer
+    Public Property FechaVenta As Date
     Public Property ClienteID As Integer
-    Public Property NroDocumento As String
-    Public Property NombreApelllido As String
-    Public Property CiudadID As Nullable(Of Integer)
-    Public Property Direccion As String
-    Public Property Telefono As String
-    Public Property EstaActivo As String
 
-    Public Overridable Property Ciudad As Ciudad
-    Public Overridable Property Mascota As ICollection(Of Mascota) = New HashSet(Of Mascota)
-    Public Overridable Property Venta As ICollection(Of Venta) = New HashSet(Of Venta)
+    Public Overridable Property Cliente As Cliente
+    Public Overridable Property DetalleVenta As ICollection(Of DetalleVenta) = New HashSet(Of DetalleVenta)
 
 End Class

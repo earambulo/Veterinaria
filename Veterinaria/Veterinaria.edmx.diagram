@@ -10,14 +10,20 @@
         <EntityTypeShape EntityType="VeterinariaModel.Especie" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VeterinariaModel.Mascota" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="VeterinariaModel.MascotaVacuna" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VeterinariaModel.Raza" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VeterinariaModel.Vacuna" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinariaModel.Raza" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinariaModel.Vacuna" Width="1.5" PointX="7.625" PointY="5.625" IsExpanded="true" />
         <AssociationConnector Association="VeterinariaModel.FK_Cliente_Ciudad" ManuallyRouted="false" />
         <AssociationConnector Association="VeterinariaModel.FK_Mascota_Cliente" ManuallyRouted="false" />
         <AssociationConnector Association="VeterinariaModel.FK_Mascota_Especie" ManuallyRouted="false" />
         <AssociationConnector Association="VeterinariaModel.FK_Mascota_Raza" ManuallyRouted="false" />
         <AssociationConnector Association="VeterinariaModel.FK_MascotaVacuna_Mascota" ManuallyRouted="false" />
         <AssociationConnector Association="VeterinariaModel.FK_MascotaVacuna_Vacuna" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VeterinariaModel.DetalleVenta" Width="1.5" PointX="7.5" PointY="8.625" />
+        <EntityTypeShape EntityType="VeterinariaModel.Producto" Width="1.5" PointX="5.25" PointY="11.75" />
+        <EntityTypeShape EntityType="VeterinariaModel.Venta" Width="1.5" PointX="5.25" PointY="8.75" />
+        <AssociationConnector Association="VeterinariaModel.FK_Venta_Cliente" />
+        <AssociationConnector Association="VeterinariaModel.FK_DetalleVenta_Producto" />
+        <AssociationConnector Association="VeterinariaModel.FK_DetalleVenta_Venta" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

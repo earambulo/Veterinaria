@@ -29,5 +29,8 @@ Partial Public Class VeterinariaEntities
     Public Overridable Property MascotaVacuna() As DbSet(Of MascotaVacuna)
     Public Overridable Property Raza() As DbSet(Of Raza)
     Public Overridable Property Vacuna() As DbSet(Of Vacuna)
+    Public Overridable Property DetalleVenta() As DbSet(Of DetalleVenta)
+    Public Overridable Property Producto() As DbSet(Of Producto)
+    Public Overridable Property Venta() As DbSet(Of Venta)
 
 End Class

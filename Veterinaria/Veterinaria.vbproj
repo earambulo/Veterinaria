@@ -127,7 +127,9 @@
     <Content Include="Scripts\CSS\dashboard.css" />
     <Content Include="Scripts\JS\dashboard.js" />
     <Content Include="Scripts\JS\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\JS\mascota.js" />
     <Content Include="Scripts\JS\raza.js" />
+    <Content Include="Scripts\JS\venta.js" />
     <Content Include="Veterinaria.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Veterinaria.Context.vb</LastGenOutput>
@@ -149,7 +151,12 @@
       <DependentUpon>Veterinaria.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Controllers\MascotaController.vb" />
     <Compile Include="Controllers\RazaController.vb" />
+    <Compile Include="Controllers\VentaController.vb" />
+    <Compile Include="DetalleVenta.vb">
+      <DependentUpon>Veterinaria.tt</DependentUpon>
+    </Compile>
     <Compile Include="Especie.vb">
       <DependentUpon>Veterinaria.tt</DependentUpon>
     </Compile>
@@ -181,10 +188,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Producto.vb">
+      <DependentUpon>Veterinaria.tt</DependentUpon>
+    </Compile>
     <Compile Include="Raza.vb">
       <DependentUpon>Veterinaria.tt</DependentUpon>
     </Compile>
     <Compile Include="Vacuna.vb">
+      <DependentUpon>Veterinaria.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Venta.vb">
       <DependentUpon>Veterinaria.tt</DependentUpon>
     </Compile>
     <Compile Include="Veterinaria.Context.vb">
@@ -233,6 +246,8 @@
     <Content Include="Veterinaria.edmx.diagram">
       <DependentUpon>Veterinaria.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Mascota\Index.vbhtml" />
+    <Content Include="Views\Venta\Index.vbhtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

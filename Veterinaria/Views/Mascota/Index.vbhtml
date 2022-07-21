@@ -3,11 +3,11 @@
     Layout = "~/Views/Plantillas/Dashboard.vbhtml"
 End Code
 
-<h2>Matenimiento de Razas</h2>
+<h2>Matenimiento de Mascotas</h2>
 <button onclick="abrirModal()" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Nueva Raza
+    Nueva Mascota
 </button>
-<div id="DivRaza">
+<div id="DivMascota">
 
 </div>
 
@@ -23,8 +23,34 @@ End Code
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción</label>
-                    <input type="text" class="form-control limpiar" id="txtDescripcion">
+                    <label for="cboCliente" class="form-label">Cliente</label>
+                    <select class="form-select " id="cboCliente">
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Nombre Mascota</label>
+                    <input type="text" class="form-control " id="txtNombreMascota">
+                </div>
+                <div class="mb-3">
+                    <label for="cboRaza" class="form-label">Raza</label>
+                    <select class="form-select " id="cboRaza">
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="Especie" class="form-label">Especie</label>
+                    <select class="form-select " id="cboEspecie">
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="fechanacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control " id="txtFechaNacimiento">
+                </div>
+                <div class="mb-3">
+                    <label for="esta_activo" class="form-label">Sexo</label>
+                    <select class="form-select " id="cboSexo">
+                        <option value="M">Macho</option>
+                        <option value="H">Hembra</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -44,29 +70,5 @@ End Code
     </div>
 </div>
 
-<!-- Modal Eliminar -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
-            </div>
-
-            <div class="modal-body">
-                <p>You are about to delete one track, this procedure is irreversible.</p>
-                <p>Do you want to proceed?</p>
-                <p class="debug-url"></p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="~/scripts/js/jquery-3.6.0.min.js"></script>
-<script src="~/scripts/js/raza.js"></script>
+<script src="~/scripts/js/mascota.js"></script>

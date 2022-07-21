@@ -9,31 +9,19 @@ Namespace Controllers
             Return View()
         End Function
 
+
         Function ListarRazas() As JsonResult
             Dim Lista = From raza In db.Raza
                         Select New With
-                                        {
-                                            raza.RazaID,
-                                            raza.Descripcion,
-                                            raza.EstaActivo
-                                        }
+                                    {
+                                        raza.RazaID,
+                                        raza.Descripcion,
+                                        raza.EstaActivo
+                                    }
+
             Return New JsonResult With {
-                .Data = Lista,
-                .JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            }
-        End Function
-        Function RecuperarRaza(id As Integer) As JsonResult
-            Dim Lista = From raza In db.Raza
-                        Where raza.RazaID = id
-                        Select New With
-                                        {
-                                            raza.RazaID,
-                                            raza.Descripcion,
-                                            raza.EstaActivo
-                                        }
-            Return New JsonResult With {
-                .Data = Lista,
-                .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            .Data = Lista,
+            .JsonRequestBehavior = JsonRequestBehavior.AllowGet
             }
         End Function
 
@@ -54,6 +42,7 @@ Namespace Controllers
                     db.SaveChanges()
                     respuesta = 1
                 End If
+
             Catch ex As Exception
                 Return respuesta
             End Try
@@ -75,6 +64,22 @@ Namespace Controllers
             End Try
 
             Return respuesta
+        End Function
+
+        Function RecuperarRaza(id As Integer) As JsonResult
+            Dim Lista = From raza In db.Raza
+                        Where raza.RazaID = id
+                        Select New With
+                                    {
+                                        raza.RazaID,
+                                        raza.Descripcion,
+                                        raza.EstaActivo
+                                    }
+
+            Return New JsonResult With {
+            .Data = Lista,
+            .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            }
         End Function
 
     End Class
